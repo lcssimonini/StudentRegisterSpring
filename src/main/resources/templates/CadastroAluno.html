@@ -1,68 +1,62 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="LayoutPadrao">
 
-<head>
-	<title>Cadastro de alunos</title>
-	<meta charset="UTF-8"/>
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="/css/custom.css" />
-</head>
+<section layout:fragment="conteudo">
+	<div class="container">
 
-<body>
-<div class="container">
-	<nav class="navbar navbar-default">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">
-	        <img class="nav-img" alt="Brand" src="/img/books.png"/>
-	      </a>
-	    </div>
-	  </div>
-	</nav>
-	<h1>Cadastro de alunos</h1>
-	
-	<form class="form-horizontal" action="/alunos" method="POST">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h1 class="panel-title">Novo aluno</h1>
+		<h1>Cadastro de alunos</h1>
+		
+		<form class="form-horizontal" action="/alunos" method="POST">
+	    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+	    		<span th:text="${mensagem}"></span>
 			</div>
-			
-			<div class="panel-body">
-			
-				<div class="form-group">
-					<label for="nome" class="col-sm-2 control-label">Nome</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" id="nome" name = "nome"/>
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="clearfix">
+						<h1 class="panel-title titulo-panel">Novo aluno</h1>
+						<a class="btn btn-link link-panel" href="/alunos">Voltar para pesquisa</a>
 					</div>
 				</div>
 				
-				<div class="form-group">
-					<label for="matricula" class="col-sm-2 control-label">Matricula</label>
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="matricula" name = "matricula"/>
-					</div>
-				</div>
+				<div class="panel-body">
 				
-				<div class="form-group">
-					<label for="cpf" class="col-sm-2 control-label">CPF</label>
-					<div class="col-sm-2">
-						<input type="text" class="form-control" id="cpf" name = "cpf"/>
+					<div class="form-group">
+						<label for="nome" class="col-sm-2 control-label">Nome</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="nome" name = "nome"/>
+						</div>
 					</div>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary">Salvar</button>
+					
+					<div class="form-group">
+						<label for="matricula" class="col-sm-2 control-label">Matricula</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="matricula" name = "matricula"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="cpf" class="col-sm-2 control-label">CPF</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="cpf" name = "cpf"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-primary">Salvar</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		
+		</form>
 	
-	</form>
-
-</div>
-
-<script type="text/javascript" src="/js/bootstrap.js"></script>
-</body>
+	</div>
+</section>
 </html>
