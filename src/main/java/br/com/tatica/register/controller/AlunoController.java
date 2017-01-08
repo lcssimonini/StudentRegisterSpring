@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.tatica.register.model.Aluno;
 import br.com.tatica.register.repository.Alunos;
+import br.com.tatica.register.repository.filter.AlunoFilter;
 
 @Controller
 @RequestMapping("/alunos")
@@ -42,14 +44,14 @@ public class AlunoController {
 		return "redirect:/alunos/novo";
 	}
 	
-	@RequestMapping
-	public ModelAndView listar() {
-		List<Aluno> todosAlunos = alunos.findAll();
-		
-		ModelAndView mv = new ModelAndView("PesquisaAlunos");
-		mv.addObject("todosAlunos", todosAlunos);
-		return mv;
-	}
+//	@RequestMapping
+//	public ModelAndView listar() {
+//		List<Aluno> todosAlunos = alunos.findAll();
+//		
+//		ModelAndView mv = new ModelAndView("PesquisaAlunos");
+//		mv.addObject("todosAlunos", todosAlunos);
+//		return mv;
+//	}
 	
 	@RequestMapping("{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Aluno aluno) {
@@ -64,6 +66,20 @@ public class AlunoController {
 		
 		attributes.addFlashAttribute("mensagem", "Aluno excluído com sucesso!");
 		return "redirect:/alunos";
+	}
+	
+	@RequestMapping
+	public ModelAndView pesquisar(@ModelAttribute("filtro") AlunoFilter filtro) {
+		List<Aluno> todosTitulos = filtrar(filtro);
+		
+		ModelAndView mv = new ModelAndView("PesquisaAlunos");
+		mv.addObject("todosAlunos", todosTitulos);
+		return mv;
+	}
+	
+	private List<Aluno> filtrar(AlunoFilter filtro) {
+		String descricao = filtro.getNome() == null ? "%" : filtro.getNome();
+		return alunos.findByNomeContaining(descricao);
 	}
 }
 
