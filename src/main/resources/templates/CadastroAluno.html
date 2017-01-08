@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<html 
-	xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="LayoutPadrao">
@@ -10,43 +9,52 @@
 	<div class="container">
 
 		<h1>Cadastro de alunos</h1>
-		
-		<form class="form-horizontal" action="/alunos" method="POST">
-	    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
-	    		<span th:text="${mensagem}"></span>
-			</div>
-		
+
+		<form class="form-horizontal" action="/alunos" method="POST"
+			th:object="${aluno}">
+			<div layout:include="MensagemGeral"></div>
+			<div layout:include="MensagemErro"></div>
+
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="clearfix">
 						<h1 class="panel-title titulo-panel">Novo aluno</h1>
-						<a class="btn btn-link link-panel" href="/alunos">Voltar para pesquisa</a>
+						<a class="btn btn-link link-panel" href="/alunos">Voltar para
+							pesquisa</a>
 					</div>
 				</div>
-				
+
 				<div class="panel-body">
-				
-					<div class="form-group">
+
+					<input type="hidden" th:field="*{codigo}" />
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('nome')} ? has-error">
 						<label for="nome" class="col-sm-2 control-label">Nome</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="nome" name = "nome"/>
+							<input type="text" class="form-control" id="nome" name="nome"
+								th:field="*{nome}" />
 						</div>
 					</div>
-					
-					<div class="form-group">
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('matricula')} ? has-error">
 						<label for="matricula" class="col-sm-2 control-label">Matricula</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="matricula" name = "matricula"/>
+							<input type="text" class="form-control" id="matricula"
+								name="matricula" th:field="*{matricula}" />
 						</div>
 					</div>
-					
-					<div class="form-group">
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('cpf')} ? has-error">
 						<label for="cpf" class="col-sm-2 control-label">CPF</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="cpf" name = "cpf"/>
+							<input type="text" class="form-control" id="cpf" name="cpf"
+								th:field="*{cpf}" />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<button type="submit" class="btn btn-primary">Salvar</button>
@@ -54,9 +62,9 @@
 					</div>
 				</div>
 			</div>
-		
+
 		</form>
-	
+
 	</div>
 </section>
 </html>
