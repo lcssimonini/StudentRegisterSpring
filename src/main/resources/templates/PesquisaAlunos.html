@@ -19,15 +19,15 @@
 
 			<div class="panel-body">
 
-				<form method="GET" class="form-horizontal" action="/alunos" th:object="${filtro}">
+				<form method="GET" class="form-horizontal" action="/alunos"
+					th:object="${filtro}">
 					<div class="form-group">
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input class="form-control"
 									placeholder="Qual aluno você está procurando?"
-									autofocus="autofocus" 
-									th:field="*{nome}"></input>
-								<span class="input-group-btn">
+									autofocus="autofocus" th:field="*{nome}"></input> <span
+									class="input-group-btn">
 									<button type="submit" class="btn btn-default">
 										<i class="glyphicon glyphicon-search"></i>
 									</button>

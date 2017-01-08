@@ -20,71 +20,56 @@ import br.com.tatica.register.repository.filter.AlunoFilter;
 @Controller
 @RequestMapping("/alunos")
 public class AlunoController {
-	
+
 	private static final String CADASTRO_ALUNO = "CadastroAluno";
 	@Autowired
 	private Alunos alunos;
-	
+
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
 		ModelAndView mv = new ModelAndView(CADASTRO_ALUNO);
 		mv.addObject(new Aluno());
 		return mv;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public String  salvar(@Validated Aluno aluno, Errors errors, RedirectAttributes attributes) {
-		
+	public String salvar(@Validated Aluno aluno, Errors errors, RedirectAttributes attributes) {
+
 		if (errors.hasErrors()) {
 			return CADASTRO_ALUNO;
 		}
-		
+
 		alunos.save(aluno);
 		attributes.addFlashAttribute("mensagem", "Aluno salvo com sucesso!");
 		return "redirect:/alunos/novo";
 	}
-	
-//	@RequestMapping
-//	public ModelAndView listar() {
-//		List<Aluno> todosAlunos = alunos.findAll();
-//		
-//		ModelAndView mv = new ModelAndView("PesquisaAlunos");
-//		mv.addObject("todosAlunos", todosAlunos);
-//		return mv;
-//	}
-	
+
 	@RequestMapping("{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Aluno aluno) {
 		ModelAndView mv = new ModelAndView(CADASTRO_ALUNO);
 		mv.addObject(aluno);
 		return mv;
 	}
-	
-	@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
+
+	@RequestMapping(value = "{codigo}", method = RequestMethod.DELETE)
 	public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
 		alunos.delete(codigo);
-		
+
 		attributes.addFlashAttribute("mensagem", "Aluno excluído com sucesso!");
 		return "redirect:/alunos";
 	}
-	
+
 	@RequestMapping
 	public ModelAndView pesquisar(@ModelAttribute("filtro") AlunoFilter filtro) {
 		List<Aluno> todosTitulos = filtrar(filtro);
-		
+
 		ModelAndView mv = new ModelAndView("PesquisaAlunos");
 		mv.addObject("todosAlunos", todosTitulos);
 		return mv;
 	}
-	
+
 	private List<Aluno> filtrar(AlunoFilter filtro) {
 		String descricao = filtro.getNome() == null ? "%" : filtro.getNome();
 		return alunos.findByNomeContaining(descricao);
 	}
 }
-
-
-
-
-
-
